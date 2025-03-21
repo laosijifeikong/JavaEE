@@ -4,5 +4,26 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="userDao" class="dao.UserDao"/>
+<!--    <bean id="userDao" class="dao.UserDao"/>-->
+
+    <!-- 使用静态工厂方法创建 userDao Bean -->
+<!--    <bean id="userDao" class="factory.MyBeanFactory" factory-method="createDaoBean"/>-->
+
+    <!-- 定义实例工厂 Bean -->
+    <bean id="daoBeanFactory" class="factory.DaoBeanFactory"/>
+
+    <!-- 使用实例工厂方法创建 userDao Bean -->
+    <bean id="userDao" factory-bean="daoBeanFactory" factory-method="createDaoBean"/>
+
+<!--    新增一个userService的bean,在配置中实现userDao的依赖注入。-->
+<!--    <bean id="userService" class="service.UserService">-->
+<!--        <property name="userDao" ref="userDao"/>-->
+<!--    </bean>-->
+
+    <!-- 定义 userService Bean，使用构造器注入 -->
+    <bean id="userService" class="service.UserService">
+        <constructor-arg ref="userDao"/> <!-- 注入 userDao -->
+    </bean>
+
+
 </beans>
