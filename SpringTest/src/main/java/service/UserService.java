@@ -8,9 +8,9 @@ public class UserService {
 
     private UserDao userDao;
 
-    public void GetUser(){
-        userDao.UserSaying();
-    }
+//    public void GetUser(){
+//        userDao.UserSaying();
+//    }
 
 //    public void setUserDao(UserDao userDao) {
 //        this.userDao = userDao;

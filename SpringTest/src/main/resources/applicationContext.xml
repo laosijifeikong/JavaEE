@@ -1,29 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd">
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-<!--    <bean id="userDao" class="dao.UserDao"/>-->
+<!--&lt;!&ndash;    <bean id="userDao" class="dao.UserDao"/>&ndash;&gt;-->
 
-    <!-- 使用静态工厂方法创建 userDao Bean -->
-<!--    <bean id="userDao" class="factory.MyBeanFactory" factory-method="createDaoBean"/>-->
+<!--    &lt;!&ndash; 使用静态工厂方法创建 userDao Bean &ndash;&gt;-->
+<!--&lt;!&ndash;    <bean id="userDao" class="factory.MyBeanFactory" factory-method="createDaoBean"/>&ndash;&gt;-->
 
-    <!-- 定义实例工厂 Bean -->
-    <bean id="daoBeanFactory" class="factory.DaoBeanFactory"/>
+<!--    &lt;!&ndash; 定义实例工厂 Bean &ndash;&gt;-->
+<!--    <bean id="daoBeanFactory" class="factory.DaoBeanFactory"/>-->
 
-    <!-- 使用实例工厂方法创建 userDao Bean -->
-    <bean id="userDao" factory-bean="daoBeanFactory" factory-method="createDaoBean"/>
+<!--    &lt;!&ndash; 使用实例工厂方法创建 userDao Bean &ndash;&gt;-->
+<!--    <bean id="userDao" factory-bean="daoBeanFactory" factory-method="createDaoBean"/>-->
 
-<!--    新增一个userService的bean,在配置中实现userDao的依赖注入。-->
+<!--&lt;!&ndash;    新增一个userService的bean,在配置中实现userDao的依赖注入。&ndash;&gt;-->
+<!--&lt;!&ndash;    <bean id="userService" class="service.UserService">&ndash;&gt;-->
+<!--&lt;!&ndash;        <property name="userDao" ref="userDao"/>&ndash;&gt;-->
+<!--&lt;!&ndash;    </bean>&ndash;&gt;-->
+
+<!--    &lt;!&ndash; 定义 userService Bean，使用构造器注入 &ndash;&gt;-->
 <!--    <bean id="userService" class="service.UserService">-->
-<!--        <property name="userDao" ref="userDao"/>-->
+<!--        <constructor-arg ref="userDao"/> &lt;!&ndash; 注入 userDao &ndash;&gt;-->
 <!--    </bean>-->
 
-    <!-- 定义 userService Bean，使用构造器注入 -->
-    <bean id="userService" class="service.UserService">
-        <constructor-arg ref="userDao"/> <!-- 注入 userDao -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/javaee"/>
+        <property name="username" value="root"/>
+        <property name="password" value="123456"/>
     </bean>
 
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 
+    <bean id="userDao" class="dao.UserDaoImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
 </beans>
