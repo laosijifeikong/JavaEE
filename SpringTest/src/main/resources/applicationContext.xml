@@ -2,8 +2,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
 <!--&lt;!&ndash;    <bean id="userDao" class="dao.UserDao"/>&ndash;&gt;-->
 
@@ -40,4 +41,31 @@
     <bean id="userDao" class="dao.UserDaoImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
+
+    <!-- 启用组件扫描和 AspectJ 自动代理 -->
+    <context:component-scan base-package="aop"/>
+    <aop:aspectj-autoproxy/>
+
+<!--    <bean name="adviceBefore" class="aop.AdviceBefore"/>-->
+<!--    <bean name="adviceAfter" class="aop.AdviceAfter"/>-->
+<!--    <bean name="adviceAround" class="aop.AdviceAround"/>-->
+<!--    <bean name="adviceThrow" class="aop.AdviceThrow"/>-->
+
+    <!-- 目标类 -->
+    <bean id="calculatorTarget" class="service.Calculator"/>
+
+<!--    &lt;!&ndash; 代理工厂配置 &ndash;&gt;-->
+<!--    <bean id="calculatorProxy" class="org.springframework.aop.framework.ProxyFactoryBean">-->
+<!--        <property name="proxyInterfaces" value="service.impl.ICalculator"/>-->
+<!--        <property name="target" ref="calculatorTarget"/>-->
+<!--        <property name="interceptorNames">-->
+<!--            <list>-->
+<!--                <value>adviceAround</value>-->
+<!--                <value>adviceBefore</value>-->
+<!--                <value>adviceAfter</value>-->
+<!--                <value>adviceThrow</value>-->
+<!--            </list>-->
+<!--        </property>-->
+<!--    </bean>-->
+
 </beans>
