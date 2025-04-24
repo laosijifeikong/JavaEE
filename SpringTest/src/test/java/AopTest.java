@@ -3,6 +3,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import service.BookService;
 import service.StudentService;
 import service.impl.ICalculator;
 
@@ -36,6 +37,17 @@ public class AopTest
         AnnotationConfigApplicationContext context =  new AnnotationConfigApplicationContext(AppConfig.class);
         StudentService studentService = context.getBean(StudentService.class);
         studentService.transfer(1, 2, 50);
+        context.close();
+    }
+
+    /**
+     * 实验7测试
+     */
+    @Test
+    public void testPurchase() {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        BookService bookService = context.getBean(BookService.class);
+        bookService.purchase(1, "1");
         context.close();
     }
 }

@@ -33,4 +33,26 @@ public class AspectTransaction {
             throw e;
         }
     }
+
+    @Around("execution(* service.BookService.*(..))")
+    public Object BookServiceAround(ProceedingJoinPoint joinPoint) throws Throwable {
+        transactionManagerExt.beginTransaction();
+        System.out.println("开始订单事务");
+        try {
+            Object result = joinPoint.proceed();
+            transactionManagerExt.commit();
+            System.out.println("订单完成");
+            return result;
+        } catch (Exception e)
+        {
+            System.out.println("订单错误");
+            System.out.println("执行回滚");
+            try {
+                transactionManagerExt.rollback();
+            } catch (Exception e1) {
+                System.out.println("回滚失败");
+            }
+            throw e;
+        }
+    }
 }

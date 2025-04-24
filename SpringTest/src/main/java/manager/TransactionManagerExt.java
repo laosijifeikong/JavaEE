@@ -1,5 +1,6 @@
 package manager;
 
+import lombok.Getter;
 import lombok.Setter;
 
 import javax.sql.DataSource;
@@ -9,6 +10,7 @@ import java.sql.SQLException;
 public class TransactionManagerExt {
 
     @Setter
+    @Getter
     private DataSource dataSource;
 
     private final ThreadLocal<Connection> connectionThreadLocal = new ThreadLocal<>();
