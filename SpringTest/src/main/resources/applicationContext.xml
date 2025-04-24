@@ -38,7 +38,7 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean id="userDao" class="dao.UserDaoImpl">
+    <bean id="userDao" class="dao.Impl.UserDaoImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
 

@@ -1,6 +1,9 @@
+import config.AppConfig;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import service.StudentService;
 import service.impl.ICalculator;
 
 public class AopTest
@@ -25,5 +28,14 @@ public class AopTest
             ex.printStackTrace();
         }
 
+    }
+
+    @Test
+    public void TestApp2()
+    {
+        AnnotationConfigApplicationContext context =  new AnnotationConfigApplicationContext(AppConfig.class);
+        StudentService studentService = context.getBean(StudentService.class);
+        studentService.transfer(1, 2, 50);
+        context.close();
     }
 }
