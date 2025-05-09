@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.StudentMapper">
+    <select id="selectByCondition" resultType="bean.Student">
+        select * from student
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null">
+                or name = #{name}
+            </if>
+            <if test="balance != null">
+                and balance = #{balance}
+            </if>
+        </where>
+    </select>
+
+    <select id="updateByCondition" parameterType="bean.Student">
+        update student
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="balance != null">
+                balance = #{balance},
+            </if>
+            id = id <!-- 占位兜底字段，防止 SQL 结构错误 -->
+        </set>
+        where id = #{id}
+    </select>
+
+    <!-- 批量根据ID查询 -->
+    <select id="selectByIds" resultType="bean.Student">
+        SELECT * FROM student
+        WHERE id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <!-- 批量插入 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO student (id, name, balance)
+        VALUES
+        <foreach collection="list" item="stu" separator=",">
+            (#{stu.id}, #{stu.name}, #{stu.balance})
+        </foreach>
+    </insert>
+</mapper>

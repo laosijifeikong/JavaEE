@@ -1,3 +1,4 @@
+import bean.Student;
 import bean.User;
 import mapper.UserMapper;
 import org.apache.ibatis.io.Resources;
@@ -8,6 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import java.io.InputStream;
+import java.util.List;
 
 public class UserMapperTest {
     private SqlSession sqlSession;
